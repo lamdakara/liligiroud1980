@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Massage index{% endblock %}
+
+{% block body %}
+    <h1>Massage index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Duree</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for massage in massages %}
+            <tr>
+                <td>{{ massage.id }}</td>
+                <td>{{ massage.titre }}</td>
+                <td>{{ massage.duree }}</td>
+                <td>{{ massage.prix }}</td>
+                <td>
+                    <a href="{{ path('app_massage_show', {'id': massage.id}) }}">show</a>
+                    <a href="{{ path('app_massage_edit', {'id': massage.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_massage_new') }}">Create new</a>
+{% endblock %}

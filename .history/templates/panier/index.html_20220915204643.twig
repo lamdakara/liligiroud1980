@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier !{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="color-vert">Votre panier</h3>
+        <div>
+            <table>
+                <tbody>
+                    {% set total = 0 %}
+                    {% for booking in bookings %}
+                        {% set massage = booking.service %}
+                        {% set total = total + massage.prix %}
+                        <tr>
+                            <td>
+                               {{ massage.titre }} de {{ massage.duree }}min -  {{ massage.prix }}€
+                               <br />
+                               {{ booking.debut | date('d/m/Y - H:i') }} 
+                            </td>
+                            <td  class="color-vert">
+                                <a href="#">Dupliquer</a>
+                            </td>
+                            <td  class="color-vert">
+                                <a href="{{ path('app_massage_edit', {'id': massage.id}) }}">Modifier</a>
+                            </td>
+                            <td  class="color-vert">
+                                 {{ include('massage/_delete_form.html.twig') }}
+                                 <a href="{{ path('app_massage_', {'id': massage.id}) }}">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                    <tr>
+                        Total : {{ total }}
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

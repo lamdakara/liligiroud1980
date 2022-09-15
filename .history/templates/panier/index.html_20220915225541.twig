@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier !{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="color-vert">Votre panier</h3>
+        <div>
+            <table class="table table-bordered border-vert">
+                <tbody>
+                   
+                    {% for booking in bookings %}
+                        {% set massage = booking.service %}
+                        <tr>
+                            <td>
+                               {{ massage.titre }} de {{ massage.duree }}min -  {{ massage.prix }}€
+                               <br />
+                               {{ booking.debut | date('d/m/Y - H:i') }} 
+                            </td>
+                            <td>
+                                <a href="#" class="color-vert">Dupliquer</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('app_massage_edit', {'id': massage.id}) }}" class="color-vert">Modifier</a>
+                            </td>
+                            <td>
+                                 {{ include('massage/_delete_form.html.twig') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                    <tr>
+                    <td>
+                        Total : {{ total }} €
+                    </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <p class="my-3 text-center">Retrouvez toutes les informations concernant vos forfaits à la page « Mes réservations ».</p>
+        <h4>Payment Method</h4>
+            <div>
+
+                <div class="card text-white">
+                    <div class="card-header">Credit Card</div>
+                    <div class="card-body bg-secondary">
+                         <form method="post" action="{{ url_redirect }}">
+                            <div id="errors"></div><!--Contiendra les messages d'erreur de paiement-->
+                            <input type="text" id="cardholder-name" placeholder="Titulaire de la carte">
+                            <div id="card-elements"></div><!--Contiendra le formulaire de saisie des informations de carte-->
+                            <div id="card-errors" role="alert"></div><!--Contiendra les erreurs relatives à la carte-->
+                            <button id="card-button" type="button" data-secret="{{ intent['client_secret'] }}">Payer</button>
+                     </form>
+                    </div>
+                </div>
+
+                
+
+              
+            </div>
+            <script src="https://js.stripe.com/v3/"></script>
+            <script>
+                window.onload = () => {
+
+                    const appearance = {
+  theme: 'stripe',
+
+  variables: {
+    colorPrimary: '#0570de',
+    colorBackground: '#ffffff',
+    colorText: '#30313d',
+    colorDanger: '#df1b41',
+    fontFamily: 'Ideal Sans, system-ui, sans-serif',
+    spacingUnit: '2px',
+    borderRadius: '4px',
+    // See all possible variables below
+  }
+};
+
+                    // Variables
+                    let stripe = Stripe('{{ public_key }}');
+                    let elements = stripe.elements({appearance: appearance});
+                    let redirect = '{{ url_redirect }}';
+
+                    // Objets de la page
+                    let cardHolderName = document.getElementById("cardholder-name")
+                    let cardButton = document.getElementById("card-button")
+                    let clientSecret = cardButton.dataset.secret;
+
+                    // Crée les éléments du formulaire de carte bancaire
+                    let card = elements.create("card")
+                    card.mount("#card-elements")
+
+                    // On gère la saisie
+                    card.addEventListener("change", (event) => {
+                        let displayError = document.getElementById("card-errors")
+                        if(event.error){
+                            displayError.textContent = event.error.message;
+                        }else{
+                            displayError.textContent = "";
+                        }
+                    })
+
+                    // On gère le paiement
+                    cardButton.addEventListener("click", () => {
+                        stripe.handleCardPayment(
+                            clientSecret, card, {
+                                payment_method_data: {
+                                    billing_details: {name: cardHolderName.value}
+                                }
+                            }
+                        ).then((result) => {
+                            if(result.error){
+                                document.getElementById("errors").innerText = result.error.message
+                            }else{
+                                document.location.href = redirect
+                            }
+                        })
+                    })
+
+                }
+            </script>
+    </div>
+{% endblock %}

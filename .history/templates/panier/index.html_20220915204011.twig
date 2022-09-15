@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier !{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3 class="color-vert">Votre panier</h3>
+        <div>
+            <table>
+                <tbody>
+                    {% for booking in bookings %}
+                        {% set massage = booking.message %}
+                        <tr>
+                            <td>
+                               {{ massage.titre }} de {{ massage.duree }}min -  {{ massage.prix }}€
+                               <br />
+                               {{ massage.description }} 
+                            </td>
+                            <td>
+                                <a href="#" class="color-vert">Dupliquer</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('app_massage_edit', {'id': massage.id}) }}">Modifier</a>
+                            </td>
+                            <td>
+                                 <a href="{{ path('app_massage_', {'id': massage.id}) }}">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                    <tr></tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

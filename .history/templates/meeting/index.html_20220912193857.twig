@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Réserver vos soins {% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{asset('assets/css/meeting.css')}}">{% endblock %}
+
+{% block body %}
+
+    <!-- HEADER RDV -->
+    <header id="meetingHeader">
+
+        <!-- Container texte -->
+        <div id="meetingContainer">
+            <h2 class="title meetingTitle">Prenez rendez-vous en ligne.</h2>
+            <p>Est dignissimos aspernatur aut velit perspiciatis sit velit ratione ut explicabo vero ab atque velit quo
+                ipsam repudiandae.</p>
+        </div>
+
+    </header>
+
+    <!-- EXPLICATION RDV -->
+    <section id="meetingExplain">
+
+        <!-- Titre -->
+        <h3 class="titleThree">Quelques recommandations pour le bon déroulement de votre rendez-vous...</h3>
+
+        <!-- Texte explication rdv -->
+        <div id="meetingText">
+            <p class="paragraphType">Est dignissimos aspernatur aut velit perspiciatis sit velit ratione ut explicabo vero
+                ab atque velit quo
+                ipsam repudiandae. Est dignissimos aspernatur aut velit perspiciatis sit velit ratione ut explicabo vero ab
+                atque velit quo ipsam repudiandae.</p>
+            <img src="{{asset('assets/img/illustration/womanBack.svg')}}" alt="illustration en ligne d'une femme de dos nu">
+            <p class="paragraphType">Est dignissimos aspernatur aut velit perspiciatis sit velit ratione ut explicabo vero
+                ab atque velit quo
+                ipsam repudiandae. Est dignissimos aspernatur aut velit perspiciatis sit velit ratione ut explicabo vero ab
+                atque velit quo ipsam repudiandae.</p>
+        </div>
+
+    </section>
+
+    <section id="listOffres">
+    <div class="row">
+            <h2 class="title">Les offres</h2>
+            <!-- Offre 1 -->
+            <h3 class="titleThree">Énergétiq’Madéro : Forfait 5 séances 250€ </h3>
+            <div class="col-md-6">
+            <!--- <p class="paragraphType"> -->
+            Est dignissimos aspernatur aut velit perspiciatis sit velit ratione ut explicabo vero
+                ab atque velit quo
+                ipsam repudiandae.
+            </div>
+            <div class="col-md-12">50min</div>
+            
+
+            </div>
+            
+            </div>
+
+    </section>
+
+    <!-- PRISE RDV -->
+    <section id="meeting">
+
+        <!-- Titre -->
+        <h3 class="titleThree">Retrouvez les dates disponibles pour votre soin</h3>
+
+    </section>
+
+{% endblock %}
