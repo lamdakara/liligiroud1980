@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Visite;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\VisiteRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,8 +44,25 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
+    public function show(Request $request, Article $article, VisiteRepository $visiteRepository, EntityManagerInterface $entityManager): Response
     {
+        // on verifie qu'on a pas déjà créer une visite pour ce même article 
+        // ( car un client sur un article est considerer comme une seule visite)
+        $visite = $visiteRepository->findBy([
+            'ip' => $request->getClientIp(), 
+            'id' => $article->getId()
+        ]);
+
+        // si il n'y a pas eu de visite on créer la visite et on sauvegarde en base de donnée
+        if (!$visite) {
+            $visite = new Visite();
+            $visite->setIp($request->getClientIp());
+            $visite->setArticle($article);
+
+            $entityManager->persist($visite);
+            $entityManager->flush();
+        }
+
         return $this->render('article/show.html.twig', [
             'article' => $article,
         ]);

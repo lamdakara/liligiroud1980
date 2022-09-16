@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,10 +28,14 @@ class Article
     #[ORM\Column(type: Types::TEXT)]
     private ?string $lien = null;
 
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Visite::class, cascade: ['persist'])]
+    private Collection $visites;
+
     public function __construct()
     {
         // on met la date de creation des qu'on créer un article
         $this->dateCreation = new \DateTime();
+        $this->visites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,6 +87,36 @@ class Article
     public function setLien(string $lien): self
     {
         $this->lien = $lien;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Visite>
+     */
+    public function getVisites(): Collection
+    {
+        return $this->visites;
+    }
+
+    public function addVisite(Visite $visite): self
+    {
+        if (!$this->visites->contains($visite)) {
+            $this->visites->add($visite);
+            $visite->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisite(Visite $visite): self
+    {
+        if ($this->visites->removeElement($visite)) {
+            // set the owning side to null (unless already changed)
+            if ($visite->getArticle() === $this) {
+                $visite->setArticle(null);
+            }
+        }
 
         return $this;
     }

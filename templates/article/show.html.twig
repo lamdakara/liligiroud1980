@@ -3,36 +3,36 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
+    <div class="container">
+        <h1> {{ article.titre }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ article.titre }}</td>
-            </tr>
-            <tr>
-                <th>DateCreation</th>
-                <td>{{ article.dateCreation ? article.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Contenu</th>
-                <td>{{ article.contenu }}</td>
-            </tr>
-            <tr>
-                <th>Lien</th>
-                <td>{{ article.lien }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <div class="text-center mt-3">
+            <img class="img-fluid" src="{{ article.lien }}" alt="{{ article.titre }}" />
+        </div>
+         <div class="text-center mt-3 text-start">
+            {{ article.contenu }}
+        </div>
+        <div class="mt-3">
+            Nombre de visite: 
+             <span class="badge bg-primary">
+                {{ article.visites|length }}
+            </span>
+               
+        </div>
+         <div class="mt-1">
+           Date pulication: 
+             <span class="badge bg-primary">
+                {{ article.dateCreation ? article.dateCreation|date('Y-m-d H:i:s') : '' }}
+            </span>
+               
+        </div>
+    </div>
 
-    <a href="{{ path('app_article_index') }}">back to list</a>
+    <a href="{{ path('app_article_index') }}" class="btn btn-warning">< Liste des articles</a>
 
-    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+    <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-warning my-1">Modifier</a>
 
     {{ include('article/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
