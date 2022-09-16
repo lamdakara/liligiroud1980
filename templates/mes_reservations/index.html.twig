@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Modifier mon mot de passe - Lili Giroud {% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{asset('assets/css/account.css')}}">{% endblock %}
+
+{% block account %}{% endblock %}
+
+{% block body %}
+
+	<!-- CONTAINER GLOBALE -->
+    <div class="container">
+        <main id="reservation mt-4">
+
+        <table class="table table-striped">
+            <tbody>
+            {% for booking in reservations %}
+                <tr>
+                    <td>{{ booking.titre }}</td>
+                    <td>{{ booking.debut ? booking.debut|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ booking.fin ? booking.fin|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_booking_show', {'id': booking.id}) }}">afficher</a>
+                        <a href="{{ path('app_booking_edit', {'id': booking.id}) }}">modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td align="center">
+                       <a href="{{ path('app_booking_new') }}" class="btn btn-primary">Créer une réservation</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+	    </table>
+	</main>
+    </div>
+
+	<!-- IMAGE ILLUSTRATION -->
+		<img src="{{asset('assets/img/illustration/separatorDecouv.svg')}}" alt"" id="separatorForm">
+{% endblock %}

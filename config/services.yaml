@@ -7,6 +7,9 @@ parameters:
     # Creation des deux variables accecibles partout dans l'application pour récuprer les clés de stripes
     app.public_key: '%env(resolve:STRIPE_PUBLIC_KEY)%'
     app.secretKey: '%env(resolve:STRIPE_SECRET_KEY)%'
+
+    app.mailjet.key: '%env(resolve:API_MAIL_JET_KEY)%'
+    app.mailjet.secret: '%env(resolve:API_MAIL_JET_SECRET)%'
 services:
     # default configuration for services in *this* file
     _defaults:

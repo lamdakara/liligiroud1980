@@ -69,7 +69,7 @@
 						{% endif %}
 						<div id="meetShop">
 							<a href=""><img src="{{asset('assets/img/icon/panier.png')}}" alt="icon panier"></a>
-							<a href="{{path('meeting')}}">Rendez-vous {{ total_booking }}</a>
+							<a href="{{path('calandar')}}">Rendez-vous {{ total_booking }}</a>
 						</div>
 					
 						<a href="{{path('blog')}}" id="marginLink">Blog</a>
@@ -83,7 +83,7 @@
 						<a href="{{path('home')}}" class="navBurgerLink">Accueil</a>
 						<a href="{{path('discovery')}}" class="navBurgerLink">Découvrir</a>
 						<a href="{{path('services')}}" class="navBurgerLink">Prestations et tarifs</a>
-						<a href="{{path('meeting')}}" class="navBurgerLink">Rendez-vous</a>
+						<a href="{{path('calendar')}}" class="navBurgerLink">Rendez-vous</a>
 						<a href="{{path('blog')}}" class="navBurgerLink">Blog</a>
 						
 						{% if app.user %}
@@ -109,7 +109,7 @@
 
 				<!-- NAVIGATION COMPTE -->
 				<nav id="navAccount">
-					<a href="">Mes réservations</a>
+					<a href="{{ path('app_mes_reservations') }}">Mes réservations</a>
 					<a href="">Mes adresses</a>
 					<a href="{{path('account_password')}}">Modifier mon mot de passe</a>
 					<a href="{{path('app_logout')}}">Déconnexion</a>
